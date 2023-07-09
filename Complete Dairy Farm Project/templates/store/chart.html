@@ -1,0 +1,267 @@
+<!-- chart.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="chartContainer" style="height: 360px; width: 100%;"></div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'canvasjs.min.js' %}"></script>
+<script>
+  window.onload = function() {
+    var jsonData = JSON.parse('{{ order_data|escapejs }}');
+
+    var dataPoints = [];
+    for (var i = 0; i < jsonData.length; i++) {
+      var order = jsonData[i];
+      var dataPoint = { label: order.product, y: order.quantity };
+      dataPoints.push(dataPoint);
+    }
+
+    var chart = new CanvasJS.Chart("chartContainer", {
+      exportEnabled: true,
+      animationEnabled: true,
+      theme: "dark2",
+      title: {
+        text: "Orders by Product"
+      },
+      subtitles: [{
+        text: "Quantity"
+      }],
+      data: [{
+        type: "column",
+        dataPoints: dataPoints
+      }]
+    });
+    chart.render();
+  }
+</script>
+
+<body>
+    
+  <script>
+  // jquery function
+  $(document).ready(function(){
+          var ctx = document.getElementById('myChart').getContext('2d');
+          var myChart = new Chart(ctx, {
+              type: 'doughnut',
+              data: {
+                  labels: [{%for data in qs%}'{{data.editor_name}}',{%endfor%}] //loop through queryset, 
+                  datasets: [{
+                      label: '# of users',
+                      data: [{%for data in qs%}{{data.num_users}},{%endfor%}],
+                      backgroundColor: [
+                          'rgba(255, 99, 132, 0.2)', 
+                          'rgba(54, 162, 235, 0.2)',
+                          'rgba(255, 206, 86, 0.2)',
+                          'rgba(75, 192, 192, 0.2)',
+                          'rgba(153, 102, 255, 0.2)',
+                          'rgba(255, 159, 64, 0.2)'
+                      ],
+                      borderColor: [
+                          'rgba(255, 99, 132, 1)',
+                          'rgba(54, 162, 235, 1)',
+                          'rgba(255, 206, 86, 1)',
+                          'rgba(75, 192, 192, 1)',
+                          'rgba(153, 102, 255, 1)',
+                          'rgba(255, 159, 64, 1)'
+                      ],
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+                  scales: {
+                      y: {
+                          beginAtZero: true
+                      }
+                  }
+              }
+  });
+      });
+  </script>
+ 
+
+
+</body>
+</html>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+{% comment %} <!-- Chart.html -->
+{% load static %}
+<html>
+<head>
+{% comment %} <script>
+  window.onload = function () {
+    var chart = new CanvasJS.Chart("chartContainer",{
+      exportEnabled: true,
+      animationEnabled: true,
+      theme: "dark2",
+      title: {
+        text: "Developer Work Week"
+      },
+      subtitles: [{
+        text: "Median hours/week"
+      }],
+      data: [{
+        type: "doughnut",
+        startAngle: -90,
+        indexLabel: "{name} ({y})",
+        yValueFormatString: "#,##0.0#\"%\"",
+        dataPoints: {{ developer_work_week_data|safe }}
+      }]
+    });
+    chart.render();
+  }
+</script>    
+<script>
+    window.onload = function () {
+      var chart = new CanvasJS.Chart("chartContainer",{
+        exportEnabled: true,
+        animationEnabled: true,
+        theme: "dark2",
+        title: {
+          text: "Developer Work Week"
+        },
+        subtitles: [{
+          text: "Median hours/week"
+        }],
+        data: [{
+          type: "doughnut",
+          startAngle: -90,
+          indexLabel: "{name} ({y})",
+          yValueFormatString: "#,##0.0#\"%\"",
+          dataPoints: {{ developer_work_week_data|safe }}
+        }]
+      });
+      chart.render();
+    }
+  </script> 
+
+</head>
+<body>
+
+<div id="chartContainer" style="width: 100%; height: 360px;"></div>
+<script src="{% static 'canvasjs.min.js' %}"></script>
+          
+
+</body>
+</html>
+
+<script src="{% static 'vendor/chart.js/Chart.js' %}"></script>
+<script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+
+
+
+
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+<!-- Page level plugin JavaScript-->
+<script src="{% static 'vendor/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+
+<!-- Demo scripts for this page-->
+<script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+<!-- Custom scripts for all pages-->
+<script src="{% static 'js/sb-admin.min.js' %}"></script>
+
+<script>
+    $(".alert-success").fadeTo(2000, 500).slideUp(500, function(){
+        $(".alert-success").slideUp(500);
+    });
+    $(".alert-error").fadeTo(2000, 500).slideUp(500, function(){
+        $(".alert-error").slideUp(500);
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ {% endcomment %}
+
+{% comment %} <!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--Chart js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <title>Animal Chart </title>
+  </head>
+  <body>
+    
+    <script>
+    // jquery function
+    $(document).ready(function(){
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: [{%for data in qs%}'{{data.editor_name}}',{%endfor%}] //loop through queryset, 
+                    datasets: [{
+                        label: '# of users',
+                        data: [{%for data in qs%}{{data.num_users}},{%endfor%}],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)', 
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+    });
+        });
+    </script>
+   
+  
+
+  </body>
+</html>
+ {% endcomment %} 

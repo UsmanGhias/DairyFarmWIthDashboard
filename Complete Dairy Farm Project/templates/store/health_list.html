@@ -1,0 +1,98 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Health List{% endblock title %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="#">Dashboard</a></li>
+                            <li><a href="#">Health</a></li>
+                            <li class="active">List</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="box-title">Healt List </h4>
+            </div>
+            <div class="card-body--">
+                <div class="table-stats order-table ov-h">
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th class="serial">#</th>
+                                <th>Supplier</th>
+                                <th>Breed</th>
+                                <th>Health</th>
+                                <th>Medicine</th>
+                                <th>Buyer</th>
+                                <th>Season</th>
+                                <th>Category</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if health %}
+                            {% for health in health %}
+                            <tr>
+                                <td class="serial">{{ forloop.counter }}</td>
+                                <td>{{ health.supplier }}</td>
+                                <td>{{ health.product }}</td>
+                                <td>{{ health.design }}</td>
+                                <td>{{ health.color }}</td>
+                                <td>{{ health.buyer }}</td>
+                                <td>{{ health.season }}</td>
+                                <td>{{ health.drop }}</td>
+                                <td>{{ health.created_date }}</td>
+                                <td>
+                                    {% if health.status == 'pending' %}
+                                        <a class="btn btn-warning" href="">{{ health.status }}</a>
+                                    {% elif health.status == 'decline' %}
+                                        <a class="btn btn-danger" href="">{{ health.status }}</a>
+                                    {% elif health.status == 'complete' %}
+                                        <a class="btn btn-success" href="">{{ health.status }}</a>
+                                    {% elif health.status == 'approved' %}
+                                        <a class="btn btn-primary" href="">{{ health.status }}</a>
+                                    {% elif health.status == 'bulk' %}
+                                        <a class="btn btn-secondary" href="">{{ health.status }}</a>
+                                    {% else %}
+                                        <a class="btn btn-info" href="">{{ health.status }}</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                                <tr><td>No Order Data</td></tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div> <!-- /.table-stats -->
+            </div>
+        </div> <!-- /.card -->
+    </div>  <!-- /.col-lg-8 -->
+
+    
+</div>
+{% endblock content %}
